@@ -1,0 +1,32 @@
+#include <iostream>
+#include "ejercicios.h"
+
+using namespace std;
+
+int main()
+{
+    bool conti = true;
+    do
+    {
+        int ejerselec = selec_eje();
+
+        switch (ejerselec)
+        {
+            case 2:
+                Prob2();
+                break;
+            case 4:
+                Prob4();
+                break;
+            case 6:
+                Prob6();
+                break;
+            case 8:
+                Prob8();
+                break;
+        }
+            conti = funcont();
+    }
+    while (conti == true);
+    return 0;
+}
