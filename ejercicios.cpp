@@ -4,35 +4,6 @@
 #include <ctime>
 using namespace std;
 
-int selec_eje (){
-    int selected;
-    cout<<"cual problema va a probar?"<<endl;
-    cin>>selected;
-    return selected;
-}
-
-bool funcont ()
-{
-    char yes;
-
-    while (true)
-    {
-        cout<<endl<<"quiere continuar con otro ejercicio? y/n"<<endl;
-        cin>>yes;
-        if (yes=='y' ||yes=='Y')
-        {
-            return true;
-        }
-        else if (yes == 'n' || yes == 'N')
-        {
-            return false;
-        }
-        else
-        {
-            cout<<"ese caracter no esta en las opciones, seleccione y o n"<<endl;
-        }
-    }
-}
 
 void Prob2()
 {

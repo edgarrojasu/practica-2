@@ -6,7 +6,9 @@ CONFIG -= qt
 
 SOURCES += \
     main.cpp\
-    ejercicios.cpp
+    ejercicios.cpp\
+    menu.cpp
 
 HEADERS += \
-    ejercicios.h
+    ejercicios.h\
+    menu.h
