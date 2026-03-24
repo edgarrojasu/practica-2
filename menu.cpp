@@ -2,20 +2,22 @@
 #include <iostream>
 using namespace std;
 
-int selec_eje (){
+int selec_eje ()
+{
+    int selected;
     while (true)
     {
-        int selected;
-        cout<<"cual problema va a probar?"<<endl;
-        cin>>selected;
-
-        /*while (!(cin>>selected))
+        cout << "Cual problema va a probar?" << endl;
+        if (cin >> selected)
         {
-            cout<<"ingrese una numero de ejercicio valido"<<endl;
+            return selected;
+        }
+        else
+        {
+            cout << "Ingrese un numero de ejercicio valido." << endl;
             cin.clear();
-            cin.ignore(10000,'\n');
-        }*/
-        return selected;
+            cin.ignore(10000, '\n');
+        }
     }
 }
 
