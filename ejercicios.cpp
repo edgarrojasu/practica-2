@@ -148,27 +148,14 @@ int sumaNumRom(char *numRoman)
     int numactu;
     int nextnum;
     int numoment = 1;
-    int numant = 0;
-    char letraActu;
-    char nextlet;
+
     int i = 0;
     bool entro = false;
 
     while (numRoman[i] != '\0')
     {
-        numant = numactu;
-
-        letraActu = numRoman[i];
-        numactu = convertRomAra(letraActu);
-        if (numRoman[i+1] != '\0')
-        {
-            nextlet = numRoman[i+1];
-            nextnum = convertRomAra(nextlet);
-        }
-        else if (numactu != numant)
-        {
-            break;
-        }
+        numactu = convertRomAra(numRoman[i]);
+        nextnum = convertRomAra(numRoman[i+1]);
 
         if (numactu>=nextnum && entro == false)
         {
@@ -188,6 +175,7 @@ int sumaNumRom(char *numRoman)
         i++;
     }
     return total;
+
 }
 
 int convertRomAra(char letra) {
