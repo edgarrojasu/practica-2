@@ -9,12 +9,12 @@ int selec_eje (){
         cout<<"cual problema va a probar?"<<endl;
         cin>>selected;
 
-        while (!(cin>>selected))
+        /*while (!(cin>>selected))
         {
             cout<<"ingrese una numero de ejercicio valido"<<endl;
             cin.clear();
             cin.ignore(10000,'\n');
-        }
+        }*/
         return selected;
     }
 }

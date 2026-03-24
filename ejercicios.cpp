@@ -4,6 +4,11 @@
 #include <ctime>
 using namespace std;
 
+void separarTextoYNumeros(char *original, char *texto, char *numeros);
+void convertirAMayusculas(char *cadena);
+int cadenaAEntero(char *cadena);
+int convertRomAra(char letra);
+int sumaNumRom(char *numRoman);
 
 void Prob2()
 {
@@ -30,6 +35,17 @@ void Prob2()
     }
 }
 
+void Prob4()
+{
+    char entrada[100];
+    cout << "Ingrese una cadena de numeros: ";
+    cin >> entrada;
+
+    int numeroConvertido = cadenaAEntero(entrada);
+
+    cout << "La cadena convertida a int es: " << numeroConvertido << endl;
+}
+
 int cadenaAEntero(char *cadena)
 {
     int resultado = 0;
@@ -42,30 +58,6 @@ int cadenaAEntero(char *cadena)
     }
 
     return resultado;
-}
-
-void Prob4()
-{
-    char entrada[100];
-    cout << "Ingrese una cadena de numeros: ";
-    cin >> entrada;
-
-    int numeroConvertido = cadenaAEntero(entrada);
-
-    cout << "La cadena convertida a int es: " << numeroConvertido << endl;
-}
-
-void convertirAMayusculas(char *cadena)
-{
-    int i = 0;
-    while (cadena[i] != '\0')
-    {
-        if (cadena[i] >= 'a' && cadena[i] <= 'z')
-        {
-            cadena[i] = cadena[i] - 32;
-        }
-        i++;
-    }
 }
 
 void Prob6()
@@ -81,6 +73,36 @@ void Prob6()
     convertirAMayusculas(entrada);
 
     cout << "En mayuscula: " << entrada << endl;
+}
+
+void convertirAMayusculas(char *cadena)
+{
+    int i = 0;
+    while (cadena[i] != '\0')
+    {
+        if (cadena[i] >= 'a' && cadena[i] <= 'z')
+        {
+            cadena[i] = cadena[i] - 32;
+        }
+        i++;
+    }
+}
+
+void Prob8()
+{
+    char original[100];
+    char soloTexto[100];
+    char soloNumeros[100];
+
+    cout << "Ingrese la cadena: ";
+
+    cin.ignore();
+    cin.getline(original, 100);
+
+    separarTextoYNumeros(original, soloTexto, soloNumeros);
+
+    cout << "Original: " << original << endl;
+    cout << "Texto: " << soloTexto << ". Numero: " << soloNumeros << endl;
 }
 
 void separarTextoYNumeros(char *original, char *texto, char *numeros)
@@ -105,19 +127,78 @@ void separarTextoYNumeros(char *original, char *texto, char *numeros)
     texto[k] = '\0';
 }
 
-void Prob8()
+void Prob10()
 {
     char original[100];
-    char soloTexto[100];
-    char soloNumeros[100];
+    int numero;
 
-    cout << "Ingrese la cadena: ";
+    cout<<"Ingrese los numeros romanos:"<<endl;
+    cin>>original;
+    convertirAMayusculas(original);
 
-    cin.ignore();
-    cin.getline(original, 100);
+    numero = sumaNumRom(original);
 
-    separarTextoYNumeros(original, soloTexto, soloNumeros);
+    cout<<endl<<"El numero en arabigo es: "<<numero<<endl;
 
-    cout << "Original: " << original << endl;
-    cout << "Texto: " << soloTexto << ". Numero: " << soloNumeros << endl;
+}
+
+int sumaNumRom(char *numRoman)
+{
+    int total = 0;
+    int numactu;
+    int nextnum;
+    int numoment = 1;
+    int numant = 0;
+    char letraActu;
+    char nextlet;
+    int i = 0;
+    bool entro = false;
+
+    while (numRoman[i] != '\0')
+    {
+        numant = numactu;
+
+        letraActu = numRoman[i];
+        numactu = convertRomAra(letraActu);
+        if (numRoman[i+1] != '\0')
+        {
+            nextlet = numRoman[i+1];
+            nextnum = convertRomAra(nextlet);
+        }
+        else if (numactu != numant)
+        {
+            break;
+        }
+
+        if (numactu>=nextnum && entro == false)
+        {
+            total += numactu;
+        }
+        else if (numRoman[i+1] != '\0' && entro == false)
+        {
+            numoment = nextnum;
+            numoment -= numactu;
+            total += numoment;
+            entro = true;
+        }
+        else
+        {
+            entro = false;
+        }
+        i++;
+    }
+    return total;
+}
+
+int convertRomAra(char letra) {
+    switch (letra) {
+    case 'I': return 1;
+    case 'V': return 5;
+    case 'X': return 10;
+    case 'L': return 50;
+    case 'C': return 100;
+    case 'D': return 500;
+    case 'M': return 1000;
+    default:  return 0;
+    }
 }

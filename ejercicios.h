@@ -5,4 +5,5 @@ void Prob2 ();
 void Prob4 ();
 void Prob6 ();
 void Prob8 ();
+void Prob10();
 #endif
