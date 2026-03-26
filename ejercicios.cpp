@@ -10,6 +10,15 @@ int cadenaAEntero(char *cadena);
 int convertRomAra(char letra);
 int sumaNumRom(char *numRoman);
 void sumaCuadra(int matriz[3][3]);
+void llenarMatriz(int *matriz, int n);
+void imprimirMatriz(int *matriz, int n);
+void rotar90(int *matriz, int n);
+void rotar180(int *matriz, int n);
+void rotar270(int *matriz, int n);
+int calcularCaminos(int n);
+void removerDigito(int *arreglo, int &tam, int pos);
+int obtenerFactorial(int n);
+
 
 void Prob2()
 {
@@ -325,10 +334,182 @@ void sumaCuadra(int matriz[3][3])
         {
             for (int j=0;j<3;j++)
             {
-                cout<<matriz [i][j]<<" ";
+                cout<<matriz [i][j]<<"\t";
             }
             cout<<endl;
         }
         cout<<"NO es magico<"<<endl;
     }
+}
+
+void Prob14() {
+    int matriz[5][5];
+
+    llenarMatriz(&matriz[0][0], 5);
+
+    cout << "Matriz Original:" << endl;
+    imprimirMatriz(&matriz[0][0], 5);
+
+    cout << endl << "Matriz Rotada 90 grados:" << endl;
+    rotar90(&matriz[0][0], 5);
+
+    cout << endl << "Matriz Rotada 180 grados:" << endl;
+    rotar180(&matriz[0][0], 5);
+
+    cout << endl << "Matriz Rotada 270 grados:" << endl;
+    rotar270(&matriz[0][0], 5);
+}
+
+void llenarMatriz(int *matriz, int n)
+{
+    int contador = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            *(matriz + (i * n) + j) = contador++;
+        }
+    }
+}
+
+void imprimirMatriz(int *matriz, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << *(matriz + (i * n) + j) << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void rotar90(int *matriz, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << *(matriz + ((n - 1 - j) * n) + i) << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void rotar180(int *matriz, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << *(matriz + ((n - 1 - i) * n) + (n - 1 - j)) << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void rotar270(int *matriz, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << *(matriz + (j * n) + (n - 1 - i)) << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void Prob16()
+{
+    int n;
+
+    cout << "Ingrese el tamano n para la cuadricula nxn:" << endl;
+
+    while (!(cin >> n) || n < 1)
+    {
+        cout << "Ingrese un numero de cuadricula valido (mayor a 0):" << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+
+    int caminos = calcularCaminos(n);
+
+    cout << endl << "Para una malla de " << n << "x" << n << " puntos hay " << caminos << " caminos." << endl;
+}
+
+int calcularCaminos(int n)
+{
+    int puntos = n + 1;
+    int malla[puntos][puntos];
+
+    int *ptrMatriz = &malla[0][0];
+
+    for (int i = 0; i < puntos; i++)
+    {
+        for (int j = 0; j < puntos; j++)
+        {
+            int indiceActual = (i * puntos) + j;
+
+            if (i == 0 || j == 0)
+            {
+                *(ptrMatriz + indiceActual) = 1;
+            }
+            else
+            {
+                int indiceArriba = ((i - 1) * puntos) + j;
+                int indiceIzquierda = (i * puntos) + (j - 1);
+
+                *(ptrMatriz + indiceActual) = *(ptrMatriz + indiceArriba) + *(ptrMatriz + indiceIzquierda);
+            }
+        }
+    }
+
+    int indiceFinal = (n * puntos) + n;
+    return *(ptrMatriz + indiceFinal);
+}
+
+void Prob18() {
+    int n;
+    cout << "Ingrese el numero n de la permutacion: ";
+    cin >> n;
+
+    int objetivo = n - 1;
+
+    int disponibles[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int tamano = 10;
+
+    char resultado[11];
+
+    for (int i = 9; i >= 0; i--) {
+        int fact = obtenerFactorial(i);
+
+        int seleccion = objetivo / fact;
+
+        *(resultado + (9 - i)) = *(disponibles + seleccion) + 48;
+
+        removerDigito(disponibles, tamano, seleccion);
+
+        objetivo %= fact;
+    }
+
+    *(resultado + 10) = '\0';
+
+    cout << "La permutacion numero " << n << " es: " << resultado << endl;
+}
+
+int obtenerFactorial(int n) {
+    if (n <= 1) return 1;
+    int res = 1;
+    for (int i = 2; i <= n; i++) {
+        res *= i;
+    }
+    return res;
+}
+
+void removerDigito(int *arreglo, int &tam, int pos) {
+    for (int i = pos; i < tam - 1; i++) {
+        *(arreglo + i) = *(arreglo + i + 1);
+    }
+    tam--;
 }

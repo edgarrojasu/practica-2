@@ -31,6 +31,15 @@ int main()
             case 12:
                 Prob12();
                 break;
+            case 14:
+                Prob14();
+                break;
+            case 16:
+                Prob16();
+                break;
+            case 18:
+                Prob18();
+                break;
         }
             conti = funcont();
     }
